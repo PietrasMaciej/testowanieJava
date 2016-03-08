@@ -2,6 +2,7 @@ package zad1;
 
 import static org.junit.Assert.*;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class CalculatorTest {
@@ -13,7 +14,7 @@ public class CalculatorTest {
 		assertEquals(7, calc.add(4, 3));
 
 	}
-
+	@Ignore
 	@Test(expected = IllegalArgumentException.class) //ma wystapic blad
 	public void testNegativeNumbersShouldThrowException() {
 		calc.add(-3, -4);
