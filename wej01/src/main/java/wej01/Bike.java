@@ -1,24 +1,21 @@
 package wej01;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Bike {
-	private String mark;
+	private String brand;
 	private String model;
 	private int size;
 	
 
-	public Bike(String mark, String model, int size) {
-		this.mark = mark;
+	public Bike(String brand, String model, int size) {
+		this.brand = brand;
 		this.model = model;
 		this.size = size;
 	}
-	public String getMark() {
-		return mark;
+	public String getBrand() {
+		return brand;
 	}
-	public void setMark(String mark) {
-		this.mark = mark;
+	public void setBrand(String brand) {
+		this.brand = brand;
 	}
 	public String getModel() {
 		return model;
