@@ -8,6 +8,10 @@ import com.example.mockdemo.messenger.MalformedRecipientException;
 import com.example.mockdemo.messenger.MessageService;
 import com.example.mockdemo.messenger.SendingStatus;
 
+import static org.hamcrest.CoreMatchers.either;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 public class MockitoAppTest {
@@ -31,9 +35,9 @@ public class MockitoAppTest {
 	public void sendingValidRecipientAndServer()
 			throws MalformedRecipientException {
 
-		when(msMock.send(VALID_SERVER, VALID_MESSAGE)).add(
-				SendingStatus.SENT).atLeastOnce();
-		when(msMock.checkConnection(VALID_SERVER)).add(
+		when(msMock.send(VALID_SERVER, VALID_MESSAGE)).thenReturn(
+				SendingStatus.SENT);
+		when(msMock.checkConnection(VALID_SERVER)).thenReturn(
 				ConnectionStatus.SUCCESS);
 
 		assertThat(messenger.testConnection(VALID_SERVER), equalTo(0));
@@ -43,47 +47,6 @@ public class MockitoAppTest {
 		verify(msMock);
 	}
 
-	@Test
-	public void sendingInvalidServer() throws MalformedRecipientException {
 
-		expect(msMock.checkConnection(INVALID_SERVER)).andReturn(
-				ConnectionStatus.FAILURE);
-		expect(msMock.send(INVALID_SERVER, VALID_MESSAGE)).andReturn(
-				SendingStatus.SENDING_ERROR);
-		replay(msMock);
-
-		assertThat(messenger.testConnection(INVALID_SERVER), equalTo(1));
-		assertEquals(1, messenger.sendMessage(INVALID_SERVER, VALID_MESSAGE));
-
-		verify(msMock);
-	}
-
-	@Test
-	public void sendingInvalidReceipient() throws MalformedRecipientException {
-
-		expect(msMock.send(VALID_SERVER, INVALID_MESSAGE)).andThrow(
-				new MalformedRecipientException()).atLeastOnce();
-
-		replay(msMock);
-
-		assertEquals(2, messenger.sendMessage(VALID_SERVER, INVALID_MESSAGE));
-		verify(msMock);
-	}
-
-	// Przechwytywanie parametrow
-	@Test
-	public void sendingConnectionStatus() {
-
-		Capture<String> capturedServer = EasyMock.newCapture();
-
-		expect(msMock.checkConnection(capture(capturedServer))).andReturn(
-				ConnectionStatus.FAILURE);
-		replay(msMock);
-
-		assertEquals(1, messenger.testConnection(INVALID_SERVER));
-		assertEquals(INVALID_SERVER, capturedServer.getValue());
-
-		verify(msMock);
-	}
 	
 }
