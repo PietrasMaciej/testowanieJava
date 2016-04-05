@@ -1,11 +1,11 @@
 package com.example.mockdemo.app;
 
-import org.easymock.Capture;
-import org.easymock.EasyMock;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 
 import com.example.mockdemo.messenger.ConnectionStatus;
 import com.example.mockdemo.messenger.MalformedRecipientException;
@@ -80,20 +80,18 @@ public class MockitoAppTest {
 		verify(msMock).send(VALID_SERVER, INVALID_MESSAGE);
 	}
 
-	@Ignore
+	
 	@Test
 	public void sendingConnectionStatus() {
 
 		ArgumentCaptor<String> capturedServer = ArgumentCaptor.forClass(String.class);//ArgumentCaptor
 
-		expect(msMock.checkConnection(capturedServer)).thenReturn(ConnectionStatus.FAILURE);
+		when(msMock.checkConnection(capturedServer.capture())).thenReturn(ConnectionStatus.FAILURE);
 		
-
 		assertEquals(1, messenger.testConnection(INVALID_SERVER));
 		assertEquals(INVALID_SERVER, capturedServer.getValue());
 
-		//verify(msMock).checkConnection(INVALID_SERVER);
-		verify(msMock);
+		verify(msMock).checkConnection(INVALID_SERVER);
 	}
 	
 }
