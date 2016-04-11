@@ -16,8 +16,8 @@ public class MessengerSteps {
 	
 	private Messenger messenger;
 	
-	private static final String VALID_SERVER = "inf.ug.edu.pl";
-	private static final String INVALID_SERVER = "inf.ug.edu.eu";
+	private static final String VALID_SERVER = "gdansk.pjwstk.edu.pl";
+	private static final String INVALID_SERVER = "gdansk.pjwstk.edu.eu";
 	private static final String VALID_MESSAGE = "some message";
 	private static final String INVALID_MESSAGE = "ab";
 
@@ -52,7 +52,7 @@ public class MessengerSteps {
 	
 	@Then("sendingMessage method should return exception with code status $EXCEPTION")
 	public void shouldSentException(int EXCEPTION){
-		assertEquals(2, messenger.sendMessage(VALID_SERVER, INVALID_MESSAGE));
+		assertEquals(2, messenger.sendMessage(validSrv, invalidMsg));
 	}
 
 	
@@ -76,18 +76,18 @@ public class MessengerSteps {
 	
 	@Then("test connection should return $SUCCESS")
 	public void shouldTest(int SUCCESS){
-		assertEquals(SUCCESS, messenger.testConnection(VALID_SERVER));
+		assertEquals(SUCCESS, messenger.testConnection(validSrv));
 	}
 	
 	
-//	@When("server is $INVALID_SERVER2")
-//	public void setInvalidServer(String INVALID_SERVER2){
-//		invalidSrv2 = INVALID_SERVER2;
+//	@When("server is $INVALID_SERVER")
+//	public void setInvalidServer(String INVALID_SERVER){
+//		invalidSrv = INVALID_SERVER;
 //	}
 //	
 //	@Then("test connection method should return $FAILURE")
 //	public void shouldTestInvalidConnection(int FAILURE){
-//		assertEquals(FAILURE, messenger.testConnection(INVALID_SERVER));
+//		assertEquals(FAILURE, messenger.testConnection(invalidSrv));
 //	}
 	
 	
