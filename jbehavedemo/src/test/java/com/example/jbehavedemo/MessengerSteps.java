@@ -52,7 +52,7 @@ public class MessengerSteps {
 	
 	@Then("sendingMessage method should return exception with code status $EXCEPTION")
 	public void shouldSentException(int EXCEPTION){
-		assertEquals(2, messenger.sendMessage(validSrv, invalidMsg));
+		assertEquals(EXCEPTION, messenger.sendMessage(validSrv, invalidMsg));
 	}
 
 	
