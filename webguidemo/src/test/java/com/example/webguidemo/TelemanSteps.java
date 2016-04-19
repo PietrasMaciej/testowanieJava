@@ -52,5 +52,17 @@ public class TelemanSteps {
     	assertTrue(pages.home().findElement(By.id("vfb-6-0")).isSelected());
        
     }	
+    
+    @When("user click a radio button")
+    public void clickRadioBox(){      
+        pages.home().checkRadioButton();
+    }
+    
+    @Then("radio button is clicked")
+    public void radioBoxClicked(){
+    	assertTrue(pages.home().findElement(By.id("vfb-7-3")).isSelected());
+       
+    }	
+    
 
 }

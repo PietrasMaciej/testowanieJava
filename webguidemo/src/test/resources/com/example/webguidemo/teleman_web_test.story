@@ -9,3 +9,6 @@ Then input has a value
 
 When user check a checkBox
 Then checkBox is clicked
+
+When user click a radio button
+Then radio button is clicked
