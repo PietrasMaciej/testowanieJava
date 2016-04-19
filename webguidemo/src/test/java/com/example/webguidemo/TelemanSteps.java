@@ -38,7 +38,18 @@ public class TelemanSteps {
     
     @Then("input has a value")
     public void textShown(){
-       assertEquals("This is a text box test", pages.visual().findElement(By.id("vfb-9")).getAttribute("value"));
+       assertEquals("This is a text box test", pages.home().findElement(By.id("vfb-9")).getAttribute("value"));
+       
+    }	
+    
+    @When("user check a checkBox")
+    public void userClickCheckBox(){      
+        pages.home().checkBoxInteraction();
+    }
+    
+    @Then("checkBox is clicked")
+    public void checkBoxClicked(){
+    	assertTrue(pages.home().findElement(By.id("vfb-6-0")).isSelected());
        
     }	
 

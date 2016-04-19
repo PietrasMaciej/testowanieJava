@@ -6,3 +6,6 @@ Then another page is shown
 
 When user type a text on input
 Then input has a value
+
+When user check a checkBox
+Then checkBox is clicked

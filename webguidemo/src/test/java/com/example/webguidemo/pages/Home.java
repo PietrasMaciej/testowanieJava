@@ -30,4 +30,8 @@ public class Home extends WebDriverPage {
 		findElement(By.id("vfb-9")).sendKeys(" test");
 	}
 	
+	public void checkBoxInteraction() {
+		findElement(By.id("vfb-6-0")).click();
+	}
+	
 }
