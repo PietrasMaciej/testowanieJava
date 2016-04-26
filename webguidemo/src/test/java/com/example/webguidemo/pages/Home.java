@@ -6,16 +6,19 @@ import org.jbehave.web.selenium.WebDriverPage;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class Home extends WebDriverPage {
-
+	JavascriptExecutor js;
 	WebDriver driver;
 	private boolean acceptNextAlert = true;
 	
 	public Home(WebDriverProvider driverProvider) {
 		super(driverProvider);
 		driver = driverProvider.get();
+		js = ((JavascriptExecutor) driver);
 	}
 
 	private final static String SPORT_LINK = "//*[@id='main-menu']/a[4]";
@@ -29,7 +32,10 @@ public class Home extends WebDriverPage {
 	
 	public void clickLink(){
 		//findElement(By.xpath(SPORT_LINK)).click();
+		WebElement element = driver.findElement(By.linkText(LINK_TEXT));
+		js.executeScript("arguments[0].scrollIntoView(true);", element);
 		findElement(By.linkText(LINK_TEXT)).click();
+		
 	}
 	
 	public void textBoxClear() {
@@ -80,6 +86,8 @@ public class Home extends WebDriverPage {
 	}
 	
 	public void clickSubmit() {
+		WebElement element = driver.findElement(By.cssSelector("#vfb-4"));
+		js.executeScript("arguments[0].scrollIntoView(true);", element);
 		findElement(By.cssSelector("#vfb-4")).click();
 	}
 	

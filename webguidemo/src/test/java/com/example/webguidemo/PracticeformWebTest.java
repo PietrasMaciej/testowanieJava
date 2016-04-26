@@ -36,8 +36,8 @@ public class PracticeformWebTest extends JUnitStories {
     private ContextView contextView = new LocalFrameContextView().sized(500, 100);
 
     public PracticeformWebTest() {
-    	System.setProperty("webdriver.chrome.driver", "/Users/kuba/Dev/chromedriver/chromedriver");
-    	//System.setProperty("webdriver.chrome.driver", "/home/PJWSTK/s11890/Pobrane/chromedriver");
+    	//System.setProperty("webdriver.chrome.driver", "/Users/kuba/Dev/chromedriver/chromedriver");
+    	System.setProperty("webdriver.chrome.driver", "/home/PJWSTK/s11890/Pobrane/chromedriver");
     	//System.setProperty("webdriver.chrome.driver", "C:\\Users\\Make_\\Desktop\\chromedriver_win32\\chromedriver.exe");
     }
 
