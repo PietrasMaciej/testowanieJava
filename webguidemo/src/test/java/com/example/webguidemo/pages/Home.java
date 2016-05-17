@@ -6,21 +6,22 @@ import org.jbehave.web.selenium.WebDriverPage;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class Home extends WebDriverPage {
-
+	JavascriptExecutor js;
 	WebDriver driver;
 	private boolean acceptNextAlert = true;
 	
 	public Home(WebDriverProvider driverProvider) {
 		super(driverProvider);
 		driver = driverProvider.get();
+		js = ((JavascriptExecutor) driver);
 	}
 
-	private final static String SPORT_LINK = "//*[@id='main-menu']/a[4]";
 	private final static String LINK_TEXT = "Setup Visual Studio";
-
 	
 	public void open() {
 		get("http://www.seleniumframework.com/Practiceform/");
@@ -28,8 +29,8 @@ public class Home extends WebDriverPage {
 	}
 	
 	public void clickLink(){
-		//findElement(By.xpath(SPORT_LINK)).click();
-		findElement(By.linkText(LINK_TEXT)).click();
+		WebElement element = driver.findElement(By.linkText(LINK_TEXT));
+		js.executeScript("arguments[0].click();", element);
 	}
 	
 	public void textBoxClear() {
@@ -45,7 +46,8 @@ public class Home extends WebDriverPage {
 	}
 	
 	public void checkBoxInteraction() {
-		findElement(By.id("vfb-6-0")).click();
+		WebElement element = driver.findElement(By.id("vfb-6-0"));
+		js.executeScript("arguments[0].click();", element);
 	}
 	
 	public boolean checkBoxSelected() {
@@ -53,7 +55,8 @@ public class Home extends WebDriverPage {
 	}
 	
 	public void checkRadioButton() {
-		findElement(By.id("vfb-7-3")).click();
+		WebElement element = driver.findElement(By.id("vfb-7-3"));
+		js.executeScript("arguments[0].click();", element);
 	}
 	
 	public boolean radioButtonSelected() {
@@ -61,7 +64,8 @@ public class Home extends WebDriverPage {
 	}
 	
 	public void clickAlert() {
-		findElement(By.id("alert")).click();
+		WebElement element = driver.findElement(By.id("alert"));
+		js.executeScript("arguments[0].click();", element);
 	}
 	
 	public String closeAlertAndGetItsText() {
@@ -80,7 +84,8 @@ public class Home extends WebDriverPage {
 	}
 	
 	public void clickSubmit() {
-		findElement(By.cssSelector("#vfb-4")).click();
+		WebElement element = driver.findElement(By.cssSelector("#vfb-4"));
+		js.executeScript("arguments[0].click();", element);
 	}
 	
 	public String validatorMsg() {
