@@ -20,6 +20,7 @@ public class PersonManager {
 
 	private PreparedStatement addPersonStmt;
 	private PreparedStatement deleteAllPersonsStmt;
+	private PreparedStatement deletePersonStmt;
 	private PreparedStatement getAllPersonsStmt;
 	private PreparedStatement getPersonByIdStmt;
 
@@ -68,6 +69,18 @@ public class PersonManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public int clearPerson(Person person) {
+        int count = 0;
+        try {
+        	deletePersonStmt.setLong(1, person.getId());
+            count = deletePersonStmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
 
 	public int addPerson(Person person) {
 		int count = 0;
@@ -83,6 +96,8 @@ public class PersonManager {
 		}
 		return count;
 	}
+	
+	
 
 	public List<Person> getAllPersons() {
 		List<Person> persons = new ArrayList<Person>();

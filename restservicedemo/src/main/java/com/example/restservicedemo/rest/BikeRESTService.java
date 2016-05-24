@@ -34,7 +34,7 @@ public class BikeRESTService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addBike(Bike bike) {
 		bm.addBike(bike);
-		return Response.status(201).entity("Car").build();
+		return Response.status(201).entity("Bike").build();
 	}
 	
 	@GET
@@ -43,7 +43,7 @@ public class BikeRESTService {
 	public List<Bike> getAllBikes() {
 		List<Bike> cars = bm.getAllBikes();
 		return cars;
-}
+	}
 	
 	@GET
 	@Path("/testBike")

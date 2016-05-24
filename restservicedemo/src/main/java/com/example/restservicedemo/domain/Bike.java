@@ -9,6 +9,7 @@ public class Bike {
 	private String make;
 	private String model;	
 	private int yop;
+	private long personId;
 	
 	public Bike(long id, String make, String model, int yop) {
 		super();
@@ -16,6 +17,15 @@ public class Bike {
 		this.make = make;
 		this.model = model;
 		this.yop = yop;
+	}
+	
+	public Bike(long id, String make, String model, int yop, long personId) { 
+		super();
+		this.id = id;
+		this.make = make;
+		this.model = model;
+		this.yop = yop;
+		this.personId = personId;
 	}
 	
 	public Bike() {
@@ -45,5 +55,12 @@ public class Bike {
 	public void setYop(int yop) {
 		this.yop = yop;
 	}
+	public long getPersonId() {
+		return personId;
+	}
+	public void setPersonId(long personId) {
+		this.personId = personId;
+	}
+	
 	
 }

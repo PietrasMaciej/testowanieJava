@@ -1,5 +1,7 @@
 package com.example.restservicedemo.rest;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -34,12 +36,28 @@ public class PersonRESTService {
 		return Response.status(201).entity("Person").build(); 
 	}
 	
+	@GET
+	@Path("/all")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Person> getAllPersons() {
+		List<Person> persons = pm.getAllPersons();
+		return persons;
+	}
 	
 	@GET
 	@Path("/test")
 	@Produces(MediaType.TEXT_HTML)
 	public String test(){
 		return "REST API /person is running";
+	}
+	
+	@GET
+	@Path("/clear/{personId}")
+	@Consumes(MediaType.TEXT_HTML)
+	public String clearPerson(@PathParam("personId") Long id) {
+		Person p = pm.getPerson(id);
+		pm.clearPerson(p);
+		return "usunieto osobe";
 	}
 	
 	@DELETE
