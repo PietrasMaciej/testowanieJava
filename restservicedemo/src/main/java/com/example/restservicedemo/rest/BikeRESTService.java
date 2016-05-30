@@ -57,5 +57,15 @@ public class BikeRESTService {
 		bm.clearBikes();
 		return Response.status(200).build();
 	}
+	
+	@GET
+	@Path("/carWithOwner/{carId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Bike getBikeWithOwner(@PathParam("bikeId") Long id){
+		Bike b = new Bike();
+		b.setId(id);
+		Bike bike = bm.getBikeWithOwner(b);
+		return bike;
+	}
 
 }

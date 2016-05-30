@@ -9,7 +9,7 @@ public class Bike {
 	private String make;
 	private String model;	
 	private int yop;
-	private long personId;
+	private Person owner;
 	
 	public Bike(long id, String make, String model, int yop) {
 		super();
@@ -19,13 +19,13 @@ public class Bike {
 		this.yop = yop;
 	}
 	
-	public Bike(long id, String make, String model, int yop, long personId) { 
+	public Bike(long id, String make, String model, int yop, Person person) { 
 		super();
 		this.id = id;
 		this.make = make;
 		this.model = model;
 		this.yop = yop;
-		this.personId = personId;
+		this.owner = person;
 	}
 	
 	public Bike() {
@@ -55,11 +55,11 @@ public class Bike {
 	public void setYop(int yop) {
 		this.yop = yop;
 	}
-	public long getPersonId() {
-		return personId;
+	public Person getOwner() {
+		return owner;
 	}
-	public void setPersonId(long personId) {
-		this.personId = personId;
+	public void setOwner(Person owner) {
+		this.owner = owner;
 	}
 	
 	
