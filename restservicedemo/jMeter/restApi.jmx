@@ -169,7 +169,7 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1000</stringProp>
+          <stringProp name="LoopController.loops">998</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
@@ -196,7 +196,7 @@
           <stringProp name="username"></stringProp>
         </JDBCDataSource>
         <hashTree/>
-        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Random Variable" enabled="true">
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Random Variable" enabled="false">
           <stringProp name="maximumValue">1000</stringProp>
           <stringProp name="minimumValue">1</stringProp>
           <stringProp name="outputFormat"></stringProp>
@@ -205,10 +205,19 @@
           <stringProp name="variableName">ID</stringProp>
         </RandomVariableConfig>
         <hashTree/>
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Licznik" enabled="true">
+          <stringProp name="CounterConfig.start">3</stringProp>
+          <stringProp name="CounterConfig.end">1000</stringProp>
+          <stringProp name="CounterConfig.incr">1</stringProp>
+          <stringProp name="CounterConfig.name">Licznik</stringProp>
+          <stringProp name="CounterConfig.format"></stringProp>
+          <boolProp name="CounterConfig.per_user">false</boolProp>
+        </CounterConfig>
+        <hashTree/>
         <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="JDBC Request" enabled="true">
           <stringProp name="dataSource">HSQLDBPool</stringProp>
-          <stringProp name="query">INSERT INTO PERSON VALUES (${ID}, &apos;Wlodzimierz&apos;, 2005)
-INSERT INTO BIKE VALUES (${ID}, &apos;Romet&apos;, &apos;najlepszy&apos;, 1992)
+          <stringProp name="query">INSERT INTO PERSON VALUES (${Licznik}, &apos;Wlodzimierz&apos;, 2005)
+INSERT INTO BIKE VALUES (${Licznik}, &apos;Romet&apos;, &apos;najlepszy&apos;, 1992, ${Licznik})
 </stringProp>
           <stringProp name="queryArguments"></stringProp>
           <stringProp name="queryArgumentsTypes"></stringProp>
@@ -361,7 +370,7 @@ INSERT INTO BIKE VALUES (${ID}, &apos;Romet&apos;, &apos;najlepszy&apos;, 1992)
           <stringProp name="dataSource">HSQLDBPool</stringProp>
           <stringProp name="query">SELECT * FROM &quot;PUBLIC&quot;.&quot;PERSON&quot;
 INNER JOIN &quot;PUBLIC&quot;.&quot;BIKE&quot;
-ON &quot;PUBLIC&quot;.&quot;PERSON&quot;.&quot;ID&quot; = &quot;PUBLIC&quot;.&quot;BIKE&quot;.&quot;ID&quot;</stringProp>
+ON &quot;PUBLIC&quot;.&quot;PERSON&quot;.&quot;P_ID&quot; = &quot;PUBLIC&quot;.&quot;BIKE&quot;.&quot;B_ID&quot;</stringProp>
           <stringProp name="queryArguments"></stringProp>
           <stringProp name="queryArgumentsTypes"></stringProp>
           <stringProp name="queryTimeout"></stringProp>
@@ -386,8 +395,15 @@ ON &quot;PUBLIC&quot;.&quot;PERSON&quot;.&quot;ID&quot; = &quot;PUBLIC&quot;.&qu
         </ConfigTestElement>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Person http" enabled="true">
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
-            <collectionProp name="Arguments.arguments"/>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
           </elementProp>
           <stringProp name="HTTPSampler.domain">localhost</stringProp>
           <stringProp name="HTTPSampler.port">8080</stringProp>
@@ -416,8 +432,15 @@ ON &quot;PUBLIC&quot;.&quot;PERSON&quot;.&quot;ID&quot; = &quot;PUBLIC&quot;.&qu
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Bike http" enabled="true">
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
-            <collectionProp name="Arguments.arguments"/>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
           </elementProp>
           <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
