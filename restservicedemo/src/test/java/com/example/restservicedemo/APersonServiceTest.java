@@ -6,17 +6,19 @@ import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertNotNull;
 
 import javax.ws.rs.core.MediaType;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.example.restservicedemo.domain.Person;
 import com.jayway.restassured.RestAssured;
 
-public class PersonServiceTest {
+public class APersonServiceTest {
 	
 	private static final String PERSON_FIRST_NAME = "Jasiu";
 	
@@ -68,6 +70,38 @@ public class PersonServiceTest {
 	       body(Person.class).
 	    when().get("/person/0").
 	    then().assertThat().body("firstName", equalTo(null));
+	}
+	
+	//test dziala jak juz baza jest stworzona, czcyli za drugim razem
+	@Ignore
+	@Test
+	public void checkPersons(){
+		//delete("/person/").then().assertThat().statusCode(200);
+		Person p1 = new Person(4L,"Mariusz", 1973);
+		Person p2 = new Person(5L,"Ryszard", 2004);
+		given()
+			.contentType(MediaType.APPLICATION_JSON)
+			.body(p1)
+		.when()
+			.post("/person/").then().assertThat().statusCode(201);
+		
+		given()
+			.contentType(MediaType.APPLICATION_JSON)
+			.body(p2)
+		.when()
+			.post("/person/").then().assertThat().statusCode(201);
+
+		given()
+		.when()
+			.get("/person/all")
+		.then()
+			.body("person[3].id", equalTo("4"))
+			.body("person[3].firstName", equalTo("Mariusz"))
+			.body("person[3].yob", equalTo("1973"))
+			.body("person[4].id", equalTo("5"))
+			.body("person[4].firstName",equalTo("Ryszard"))
+			.body("person[4].yob", equalTo("2004"))
+			.body("person.id", hasItems("3","4"));
 	}
 	
 	@Test

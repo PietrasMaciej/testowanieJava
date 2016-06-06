@@ -24,7 +24,7 @@ public class BikeManager {
 	private PreparedStatement deleteAllBikesStmt;
 	private PreparedStatement getAllBikesStmt;
 	private PreparedStatement getBikeByIdStmt;
-	
+	private PreparedStatement getBikesWithOwnerIdStmt;
 	private PreparedStatement getBikeWithOwnerStmt;
 	
 	private Statement statement;
@@ -57,6 +57,8 @@ public class BikeManager {
 					.prepareStatement("SELECT b_id, make, model, yop, owner_id FROM Bike");
 			getBikeByIdStmt = connection
 					.prepareStatement("SELECT b_id, make, model, yop, owner_id FROM Bike where b_id = ?");
+			getBikesWithOwnerIdStmt = connection
+					.prepareStatement("SELECT b_id, make, model, yop, owner_id FROM Bike where owner_id = ?");
 			getBikeWithOwnerStmt = connection.prepareStatement(
 					"SELECT p_id, name, yob, b_id, make, model, yop, owner_id FROM Person JOIN Bike ON b_id = ?");
 			
@@ -165,5 +167,28 @@ public class BikeManager {
 			e.printStackTrace();
 		}
 		return b;
+	}
+	
+	public List<Bike> getBikesWithOwnerId(Person owner) {
+		List<Bike> bikes = new ArrayList<Bike>();
+		try {
+			getBikesWithOwnerIdStmt.setLong(1, owner.getId());
+			
+			ResultSet rs = getBikesWithOwnerIdStmt.executeQuery();
+
+			while (rs.next()) {
+				Bike b = new Bike();
+				b.setId(rs.getLong("id"));
+				b.setMake(rs.getString("make"));
+				b.setModel(rs.getString("model"));
+				b.setYop(rs.getInt("yop"));	
+				b.setOwner(owner);
+				bikes.add(b);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return bikes;
 	}
 }

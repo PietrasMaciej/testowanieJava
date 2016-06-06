@@ -51,7 +51,7 @@ public class PersonRESTService {
 		return "REST API /person is running";
 	}
 	
-	@GET
+	@POST
 	@Path("/clear/{personId}")
 	@Consumes(MediaType.TEXT_HTML)
 	public String clearPerson(@PathParam("personId") Long id) {

@@ -14,12 +14,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.example.restservicedemo.domain.Bike;
+import com.example.restservicedemo.domain.Person;
 import com.example.restservicedemo.service.BikeManager;
+import com.example.restservicedemo.service.PersonManager;
 
 @Path("bike")
 public class BikeRESTService {
 	
 	private BikeManager bm = new BikeManager();
+	private PersonManager pm = new PersonManager();
 	
 	@GET
 	@Path("/{bikeId}")
@@ -41,15 +44,15 @@ public class BikeRESTService {
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Bike> getAllBikes() {
-		List<Bike> cars = bm.getAllBikes();
-		return cars;
+		List<Bike> bikes = bm.getAllBikes();
+		return bikes;
 	}
 	
 	@GET
 	@Path("/testBike")
 	@Produces(MediaType.TEXT_HTML)
 	public String testBike() {
-		return "REST API /car is running";
+		return "REST API /bike is running";
 	}
 	
 	@DELETE
@@ -59,13 +62,23 @@ public class BikeRESTService {
 	}
 	
 	@GET
-	@Path("/carWithOwner/{carId}")
+	@Path("/bikeWithOwner/{bikeId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Bike getBikeWithOwner(@PathParam("bikeId") Long id){
 		Bike b = new Bike();
 		b.setId(id);
 		Bike bike = bm.getBikeWithOwner(b);
 		return bike;
+	}
+	
+	@GET
+	@Path("/withOwnerId/{ownerId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Bike> getBikeWithOwnerId(@PathParam("ownerId") Long id) {
+		Person owner = pm.getPerson(id);
+		
+		List<Bike> bikes = bm.getBikesWithOwnerId(owner);
+		return bikes;
 	}
 
 }

@@ -11,7 +11,10 @@ import static org.junit.Assert.assertNotNull;
 
 import javax.ws.rs.core.MediaType;
 
+import org.hamcrest.Matchers;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.example.restservicedemo.domain.Bike;
@@ -42,6 +45,19 @@ public class BikeServiceTest {
 		then().
 			assertThat().statusCode(201);
 	}
+	
+	
+	@Test
+	public void clearBikes() {
+		delete("/bike").then().assertThat().statusCode(200);
+		given()
+	       	.contentType(MediaType.APPLICATION_JSON)
+	       	.body(Bike.class)
+	    .when()
+	    .then()
+	    	.body("", Matchers.hasSize(0));
+		
+	}
 
 	@Test
 	public void addBikes() {
@@ -58,12 +74,51 @@ public class BikeServiceTest {
 		assertThat(BIKE_MODEL, equalToIgnoringCase(rBike.getModel()));
 
 	}
+	
+	
+	@Test
+	public void getBikeWithOwner(){
+		//delete("/bike/").then().assertThat().statusCode(200);
+		//delete("/person/").then().assertThat().statusCode(200);
+		Person person1 = new Person(3L, "Janusz", 1971);
+		Bike bike1 = new Bike(2L,"Romet", "Blyskawica", 1983, person1);
+		given()
+			.contentType(MediaType.APPLICATION_JSON)
+			.body(person1)
+		.when()
+			.post("/person/").then().assertThat().statusCode(201);
+		given()
+			.contentType(MediaType.APPLICATION_JSON)
+			.body(bike1)
+		.when()
+			.post("/bike").then().assertThat().statusCode(201);
+		
+		given()
+		.when()
+			.get("/bike/2")
+		.then()
+			.body("id", equalTo("2"))
+			.body("make", equalTo("Romet"))
+			.body("model", equalTo("Blyskawica"))
+			.body("owner.id", equalTo("3"))
+			.body("owner.firstName", equalTo("Janusz"))
+			.body("owner.yob", equalTo("1971"))
+			.body("yop", equalTo("1983"));
+		
+	}
 
 	@Test
 	public void getAllBikes() {
 		String bikes = get("/bike/all/").asString();
 
 		assertNotNull(bikes);
+	}
+	
+	@AfterClass
+	public static void setDown() {
+		//delete("/person/clear/2").then().assertThat().statusCode(200);
+		//delete("/bike/").then().assertThat().statusCode(200);
+		//delete("/person/").then().assertThat().statusCode(200);
 	}
 
 }
