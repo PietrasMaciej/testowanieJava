@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <PERSON ID="7" NAME="Ryszard" YOB="1957"/>
+  <PERSON ID="8" NAME="Andrzej" YOB="1999"/>
+  <PERSON ID="9" NAME="Mirosław" YOB="1902"/>
+</dataset>
