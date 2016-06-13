@@ -9,6 +9,7 @@ function getPersons() {
     	 method: "GET",
 		 url: "http://localhost:8080/restservicedemo/api/person/all",
          success: function (data) {
+        	 if (data) {
         	 console.log(data);
         	listContainer.append('<table class="table table-hover" border = "1"><tr><th>ID</th><th>Name</th><th>Yob</th></tr></table>');
         	var html = "";
@@ -27,17 +28,19 @@ function getPersons() {
         	    		'</tr>';
         	}
         	$(html).insertAfter(listContainer.find('tr'));
+         }
         }
     });
      
 }
 
-function getCars() {
+function getBikes() {
 
     $.ajax({
     	 method: "GET",
 		 url: "http://localhost:8080/restservicedemo/api/bike/all",
          success: function (data) {
+        	 if (data) {
         	 console.log(data);
         	 listContainerTwo.append('<table class="table table-hover" border = "1"><tr><th>ID</th><th>Make</th><th>Model</th><th>YOP</th><th>Owner</th></tr></table>');
         	var html = "";
@@ -60,15 +63,34 @@ function getCars() {
         	    		'</tr>';
         	}
         	$(html).insertAfter(listContainerTwo.find('tr'));
+         }
         }
     });
      
 }
 
 getPersons();
-getCars();
+//getBikes();
 
 
+    
+$("#btnSave").click(function() {
+    $.ajax({
+    	method: 'POST',
+        url: 'http://localhost:8080/restservicedemo/api/person',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({
+        	id: $("#idPerson").val(), 
+        	firstName: $("#name").val(), 
+        	yob: $("#yob").val()
+        }),
+        success: function (data) { },
+        error: function() {
+        	console.log("Nie ma osob");
+        }
+    });
+});
 
 
 

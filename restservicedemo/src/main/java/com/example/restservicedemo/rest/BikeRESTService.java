@@ -80,5 +80,12 @@ public class BikeRESTService {
 		List<Bike> bikes = bm.getBikesWithOwnerId(owner);
 		return bikes;
 	}
+	
+	@DELETE
+	@Path("/clear/{bikeId}")
+	public Response clearPerson(@PathParam("bikeId") Long id) {
+		bm.clearBike(id);
+		return Response.status(200).build();
+	}
 
 }

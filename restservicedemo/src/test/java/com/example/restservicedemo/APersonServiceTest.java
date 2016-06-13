@@ -72,11 +72,10 @@ public class APersonServiceTest {
 	    then().assertThat().body("firstName", equalTo(null));
 	}
 	
-	//test dziala jak juz baza jest stworzona, czcyli za drugim razem
-	@Ignore
 	@Test
-	public void checkPersons(){
-		//delete("/person/").then().assertThat().statusCode(200);
+	public void getPersons(){
+		delete("/bike/").then().assertThat().statusCode(200);
+		delete("/person/").then().assertThat().statusCode(200);
 		Person p1 = new Person(4L,"Mariusz", 1973);
 		Person p2 = new Person(5L,"Ryszard", 2004);
 		given()
@@ -95,13 +94,13 @@ public class APersonServiceTest {
 		.when()
 			.get("/person/all")
 		.then()
-			.body("person[3].id", equalTo("4"))
-			.body("person[3].firstName", equalTo("Mariusz"))
-			.body("person[3].yob", equalTo("1973"))
-			.body("person[4].id", equalTo("5"))
-			.body("person[4].firstName",equalTo("Ryszard"))
-			.body("person[4].yob", equalTo("2004"))
-			.body("person.id", hasItems("3","4"));
+			.body("person[0].id", equalTo("4"))
+			.body("person[0].firstName", equalTo("Mariusz"))
+			.body("person[0].yob", equalTo("1973"))
+			.body("person[1].id", equalTo("5"))
+			.body("person[1].firstName",equalTo("Ryszard"))
+			.body("person[1].yob", equalTo("2004"))
+			.body("person.id", hasItems("4","5"));
 	}
 	
 	@Test

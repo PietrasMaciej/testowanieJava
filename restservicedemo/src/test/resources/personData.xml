@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
-  <PERSON ID="7" NAME="Ryszard" YOB="1957"/>
-  <PERSON ID="8" NAME="Andrzej" YOB="1999"/>
-  <PERSON ID="9" NAME="Mirosław" YOB="1902"/>
+  <PERSON NAME="Geralt" YOB="1208"/>
+  <PERSON NAME="Zoltan" YOB="1207"/>
+  <PERSON NAME="Jaskier" YOB="1249"/>
+  <PERSON NAME="Płotka" YOB="1315"/>
+  <PERSON NAME="Boromir" YOB="1678"/>
 </dataset>

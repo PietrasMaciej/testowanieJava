@@ -13,7 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.example.restservicedemo.domain.Car;
+import com.example.restservicedemo.domain.Bike;
 import com.jayway.restassured.RestAssured;
 
 
@@ -32,7 +32,7 @@ public class CarServiceTest {
 		get("/cars/0").then().assertThat().body("model", equalTo("Opel"));
 		
 		
-		Car aCar = get("/cars/0").as(Car.class);
+		Bike aCar = get("/cars/0").as(Bike.class);
 		
 		assertThat(aCar.getModel(), equalToIgnoringCase("Opel"));
 	}
@@ -41,7 +41,7 @@ public class CarServiceTest {
 	@Ignore
 	public void addCar(){
 		
-		Car aCar = new Car(2, "Ford", 2011);
+		Bike aCar = new Bike(2, "Ford", 2011);
 		given().
 		       contentType(MediaType.APPLICATION_JSON).
 		       body(aCar).

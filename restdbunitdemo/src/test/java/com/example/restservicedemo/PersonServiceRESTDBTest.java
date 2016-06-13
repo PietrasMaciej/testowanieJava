@@ -55,7 +55,7 @@ public class PersonServiceRESTDBTest {
 	}
 
 	@Test
-	public void addPeson() throws Exception{
+	public void addPerson() throws Exception{
 	
 		Person aPerson = new Person("Ziutek", 2010);
 		given().contentType(MediaType.APPLICATION_JSON).body(aPerson)

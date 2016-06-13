@@ -1,4 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
-  <PERSON/>
+  <PERSON NAME="Geralt" YOB="1208"/>
+  <PERSON NAME="Zoltan" YOB="1207"/>
+  <PERSON NAME="Jaskier" YOB="1249"/>
+  <PERSON NAME="Płotka" YOB="1315"/>
 </dataset>

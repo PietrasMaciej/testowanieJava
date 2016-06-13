@@ -26,6 +26,9 @@ public class BikeManager {
 	private PreparedStatement getBikeByIdStmt;
 	private PreparedStatement getBikesWithOwnerIdStmt;
 	private PreparedStatement getBikeWithOwnerStmt;
+	private PreparedStatement createBikeTableStmt;
+	private PreparedStatement dropBikeTableStmt;
+	private PreparedStatement deleteBikeStmt;
 	
 	private Statement statement;
 	
@@ -61,6 +64,12 @@ public class BikeManager {
 					.prepareStatement("SELECT b_id, make, model, yop, owner_id FROM Bike where owner_id = ?");
 			getBikeWithOwnerStmt = connection.prepareStatement(
 					"SELECT p_id, name, yob, b_id, make, model, yop, owner_id FROM Person JOIN Bike ON b_id = ?");
+			createBikeTableStmt = connection
+					.prepareStatement(CREATE_TABLE_BIKE);
+			dropBikeTableStmt = connection
+					.prepareStatement("DROP TABLE Bike");
+			deleteBikeStmt = connection
+					.prepareStatement("DELETE FROM Bike WHERE b_id = ?");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -74,6 +83,15 @@ public class BikeManager {
 	public void clearBikes() {
 		try {
 			deleteAllBikesStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void clearBike(Long id) {
+		try {
+			deleteBikeStmt.setLong(1, id);
+			deleteBikeStmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -190,5 +208,21 @@ public class BikeManager {
 			e.printStackTrace();
 		}
 		return bikes;
+	}
+	
+	public void createBikeTable() {
+		try {
+			createBikeTableStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void dropBikeTable() {
+		try {
+			dropBikeTableStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

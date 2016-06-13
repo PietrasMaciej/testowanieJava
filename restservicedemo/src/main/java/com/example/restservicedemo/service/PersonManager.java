@@ -24,6 +24,8 @@ public class PersonManager {
 	private PreparedStatement deletePersonStmt;
 	private PreparedStatement getAllPersonsStmt;
 	private PreparedStatement getPersonByIdStmt;
+	private PreparedStatement createPersonTableStmt;
+	private PreparedStatement dropPersonTableStmt;
 
 	private Statement statement;
 
@@ -55,6 +57,10 @@ public class PersonManager {
 					.prepareStatement("SELECT p_id, name, yob FROM Person");
 			getPersonByIdStmt = connection
 					.prepareStatement("SELECT p_id, name, yob FROM Person where p_id = ?");
+			createPersonTableStmt = connection
+					.prepareStatement(CREATE_TABLE_PERSON);
+			dropPersonTableStmt = connection
+					.prepareStatement("DROP TABLE Person");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -73,16 +79,14 @@ public class PersonManager {
 		}
 	}
 	
-	public int clearPerson(Person person) {
-        int count = 0;
+	public void clearPerson(Long id) {
         try {
-        	deletePersonStmt.setLong(1, person.getId());
-            count = deletePersonStmt.executeUpdate();
+        	deletePersonStmt.setLong(1, id);
+            deletePersonStmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return count;
     }
 
 	public int addPerson(Person person) {
@@ -140,6 +144,22 @@ public class PersonManager {
 		}
 
 		return p;
+	}
+	
+	public void createPersonTable() {
+		try {
+			createPersonTableStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void dropPersonTable() {
+		try {
+			dropPersonTableStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

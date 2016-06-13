@@ -51,13 +51,11 @@ public class PersonRESTService {
 		return "REST API /person is running";
 	}
 	
-	@POST
+	@DELETE
 	@Path("/clear/{personId}")
-	@Consumes(MediaType.TEXT_HTML)
-	public String clearPerson(@PathParam("personId") Long id) {
-		Person p = pm.getPerson(id);
-		pm.clearPerson(p);
-		return "usunieto osobe";
+	public Response clearPerson(@PathParam("personId") Long id) {
+		pm.clearPerson(id);
+		return Response.status(200).build();
 	}
 	
 	@DELETE

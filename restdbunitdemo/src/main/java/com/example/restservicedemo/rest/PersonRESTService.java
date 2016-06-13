@@ -13,7 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.example.restservicedemo.domain.Car;
+import com.example.restservicedemo.domain.Bike;
 import com.example.restservicedemo.domain.Person;
 import com.example.restservicedemo.service.PersonManager;
 
@@ -34,10 +34,10 @@ public class PersonRESTService {
 	@GET
 	@Path("/car/{carId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Car getCar(@PathParam("carId") Long id){
-		Car c = new Car();
+	public Bike getCar(@PathParam("carId") Long id){
+		Bike c = new Bike();
 		c.setId(id);
-		Car car = pm.getCarWithOwner(c);
+		Bike car = pm.getCarWithOwner(c);
 		return car;
 	}
 	

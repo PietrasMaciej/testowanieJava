@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.example.restservicedemo.domain.Car;
+import com.example.restservicedemo.domain.Bike;
 import com.example.restservicedemo.domain.Person;
 import com.example.restservicedemo.service.PersonManager;
 
@@ -19,7 +19,7 @@ public class BLTest {
 	@Ignore
 	public void checkCarAdding() {
 
-		Car c = new Car();
+		Bike c = new Bike();
 		c.setModel("Syrena");
 		c.setYop(1973);
 
@@ -30,22 +30,22 @@ public class BLTest {
 	@Ignore
 	public void checkSell() {
 
-		Car c1 = new Car();
+		Bike c1 = new Bike();
 		c1.setModel("Syrena");
 		c1.setYop(1973);
 
-		Car c2 = new Car();
+		Bike c2 = new Bike();
 		c2.setModel("Fiat Punto");
 		c2.setYop(1999);
 
 		assertEquals(1, pm.addCar(c1));
 		assertEquals(1, pm.addCar(c2));
 
-		List<Car> cars = pm.getAllCars();
+		List<Bike> cars = pm.getAllCars();
 
 		assertTrue(cars.size() > 0);
 
-		Car carToSell = cars.get(1);
+		Bike carToSell = cars.get(1);
 
 		Person p1 = new Person();
 		p1.setFirstName("Zieliński");
@@ -67,7 +67,7 @@ public class BLTest {
 		
 		pm.sellCar(carToSell, owner);
 		
-		Car rCar = pm.getCarWithOwner(carToSell);
+		Bike rCar = pm.getCarWithOwner(carToSell);
 		
 		assertEquals(owner.getFirstName(), rCar.getOwner().getFirstName());
 

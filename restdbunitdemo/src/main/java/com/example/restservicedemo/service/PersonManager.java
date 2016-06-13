@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.example.restservicedemo.domain.Car;
+import com.example.restservicedemo.domain.Bike;
 import com.example.restservicedemo.domain.Person;
 
 public class PersonManager {
@@ -154,7 +154,7 @@ public class PersonManager {
 		return p;
 	}
 
-	public int addCar(Car car) {
+	public int addCar(Bike car) {
 		int count = 0;
 		try {
 			addCarStmt.setString(1, car.getModel());
@@ -168,11 +168,11 @@ public class PersonManager {
 		return count;
 	}
 
-	public Map<Person, List<Car>> getPersonWithCar() {
+	public Map<Person, List<Bike>> getPersonWithCar() {
 
-		List<Car> cars = new ArrayList<Car>();
+		List<Bike> cars = new ArrayList<Bike>();
 
-		Map<Person, List<Car>> result = new HashMap<>();
+		Map<Person, List<Bike>> result = new HashMap<>();
 
 		try {
 			ResultSet rs = getAllPersonsWithCarsStmt.executeQuery();
@@ -185,7 +185,7 @@ public class PersonManager {
 				p.setFirstName(rs.getString("name"));
 				p.setYob(rs.getInt("yob"));
 
-				Car c = new Car();
+				Bike c = new Bike();
 				c.setId(rs.getInt("c_id"));
 				c.setModel(rs.getString("model"));
 				c.setYop(rs.getInt("yop"));
@@ -209,9 +209,9 @@ public class PersonManager {
 		return result;
 	}
 
-	public Car getCarWithOwner(Car car) {
+	public Bike getCarWithOwner(Bike car) {
 
-		Car c = new Car();
+		Bike c = new Bike();
 		try {
 			
 			getCarWithOwnerStmt.setLong(1, car.getId());
@@ -238,7 +238,7 @@ public class PersonManager {
 		return c;
 	}
 	
-	public int sellCar(Car car, Person person) {
+	public int sellCar(Bike car, Person person) {
 		int count = 0;
 		try {
 			
@@ -254,15 +254,15 @@ public class PersonManager {
 		return count;
 	}
 	
-	public List<Car> getAllCars() {
+	public List<Bike> getAllCars() {
 		
-		List<Car> cars = new ArrayList<Car>();
+		List<Bike> cars = new ArrayList<Bike>();
 
 		try {
 			ResultSet rs = getAllCarsStmt.executeQuery();
 
 			while (rs.next()) {
-				Car c = new Car();
+				Bike c = new Bike();
 				c.setId(rs.getInt("c_id"));
 				c.setModel(rs.getString("model"));
 				c.setYop(rs.getInt("yop"));

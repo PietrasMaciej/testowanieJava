@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <PERSON P_ID="1" NAME="Geralt" YOB="1208"/>
+  <PERSON P_ID="2" NAME="Zoltan" YOB="1207"/>
+  <BIKE B_ID="1" MAKE="Kross" MODEL="A6" YOP="2010" OWNER_ID="1"/>
+</dataset>
