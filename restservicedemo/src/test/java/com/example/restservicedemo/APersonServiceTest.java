@@ -11,6 +11,7 @@ import static org.junit.Assert.assertNotNull;
 
 import javax.ws.rs.core.MediaType;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -115,6 +116,12 @@ public class APersonServiceTest {
 		String persons = get("/person/all").asString();
 		assertNotNull(persons);
 	}
+	
+	@AfterClass
+    public static void tearDown(){
+		bm.clearBikes();
+		pm.clearPersons();
+    }
 	
 
 }

@@ -19,9 +19,14 @@ import org.junit.Test;
 
 import com.example.restservicedemo.domain.Bike;
 import com.example.restservicedemo.domain.Person;
+import com.example.restservicedemo.service.BikeManager;
+import com.example.restservicedemo.service.PersonManager;
 import com.jayway.restassured.RestAssured;
 
 public class BikeServiceTest {
+	
+	static PersonManager pm = new PersonManager();
+	static BikeManager bm = new BikeManager();
 
 	public static final String BIKE_MAKE = "Romet";
 	public static final String BIKE_MODEL = "Zefir";
@@ -31,6 +36,9 @@ public class BikeServiceTest {
 
 	@BeforeClass
 	public static void setUp() {
+		bm.clearBikes();
+		pm.clearPersons();
+		
 		RestAssured.baseURI = "http://localhost";
 		RestAssured.port = 8080;
 		RestAssured.basePath = "/restservicedemo/api";
@@ -116,6 +124,8 @@ public class BikeServiceTest {
 	
 	@AfterClass
 	public static void setDown() {
+		bm.clearBikes();
+		pm.clearPersons();    
 		//delete("/person/clear/2").then().assertThat().statusCode(200);
 		//delete("/bike/").then().assertThat().statusCode(200);
 		//delete("/person/").then().assertThat().statusCode(200);
