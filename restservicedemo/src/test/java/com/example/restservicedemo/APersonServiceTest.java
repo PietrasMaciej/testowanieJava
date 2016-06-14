@@ -16,9 +16,14 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.example.restservicedemo.domain.Person;
+import com.example.restservicedemo.service.BikeManager;
+import com.example.restservicedemo.service.PersonManager;
 import com.jayway.restassured.RestAssured;
 
 public class APersonServiceTest {
+	
+	static PersonManager pm = new PersonManager();
+	static BikeManager bm = new BikeManager();
 	
 	private static final String PERSON_FIRST_NAME = "Jasiu";
 	
@@ -27,6 +32,8 @@ public class APersonServiceTest {
 		RestAssured.baseURI = "http://localhost";
 		RestAssured.port = 8080;
 		RestAssured.basePath = "/restservicedemo/api";   	
+		bm.clearBikes();
+		pm.clearPersons();
     }
 	
 	@Test
