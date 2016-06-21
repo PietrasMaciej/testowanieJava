@@ -29,6 +29,7 @@ public class BikeManager {
 	private PreparedStatement createBikeTableStmt;
 	private PreparedStatement dropBikeTableStmt;
 	private PreparedStatement deleteBikeStmt;
+	private PreparedStatement sellBikeStmt;
 	
 	private Statement statement;
 	
@@ -70,6 +71,8 @@ public class BikeManager {
 					.prepareStatement("DROP TABLE Bike");
 			deleteBikeStmt = connection
 					.prepareStatement("DELETE FROM Bike WHERE b_id = ?");
+			sellBikeStmt = connection
+					.prepareStatement("UPDATE Bike SET owner_id = ? WHERE b_id = ?");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -208,6 +211,22 @@ public class BikeManager {
 			e.printStackTrace();
 		}
 		return bikes;
+	}
+	
+	public int sellBike(Bike bike, Person person) {
+		int count = 0;
+		try {
+			
+			sellBikeStmt.setLong(1, person.getId());
+			sellBikeStmt.setLong(2, bike.getId());
+			
+
+			count = sellBikeStmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 	
 	public void createBikeTable() {

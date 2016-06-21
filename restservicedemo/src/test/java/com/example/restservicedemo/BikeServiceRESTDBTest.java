@@ -2,6 +2,7 @@ package com.example.restservicedemo;
 
 import static com.jayway.restassured.RestAssured.delete;
 import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.RestAssured.get;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,6 +26,7 @@ import org.dbunit.operation.DatabaseOperation;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.example.restservicedemo.domain.Bike;
@@ -110,7 +112,31 @@ public class BikeServiceRESTDBTest {
 		Assertion.assertEquals(expectedTable, actualTable);
 	}
     
-
+    @Ignore
+    @Test
+	public void sellBike() throws Exception {
+		Person p = new Person(6L, "Marcel", 2004); 
+		Bike b = new Bike(8L, "Giant", "Super", 2007, p);
+		given().contentType(MediaType.APPLICATION_JSON)
+			.body(p).when().post("/person/").then().assertThat().statusCode(201);
+		
+		given().contentType(MediaType.APPLICATION_JSON)
+		.body(b).when().post("/bike/").then().assertThat().statusCode(201);
+		
+		Person person = get("/person/6").as(Person.class);
+		Bike bike = get("/bike/8").as(Bike.class);
+		
+		given().contentType(MediaType.APPLICATION_JSON)
+			.when().post("/bike/sell/" + bike.getId() + "/" + person.getId()).then().assertThat().statusCode(201);
+		
+		IDataSet dbDataSet = connection.createDataSet();
+		ITable actualTable = dbDataSet.getTable("BIKE");
+		IDataSet expectedDataSet = new FlatXmlDataSetBuilder().build(
+				new File("src/test/resources/sellBikeData.xml"));
+		ITable expectedTable = expectedDataSet.getTable("BIKE");
+		Assertion.assertEquals(expectedTable, actualTable);
+	}
+    
     @AfterClass
     public static void tearDown() throws Exception {
     	bm.dropBikeTable();

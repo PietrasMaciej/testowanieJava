@@ -1,7 +1,8 @@
 package com.example.shdemo.service;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Ignore;
@@ -27,15 +28,23 @@ public class SellingManagerTest {
 
 	private final String NAME_1 = "Bolek";
 	private final String PIN_1 = "1234";
+	private final Date DATE = new Date();
 
 	private final String NAME_2 = "Lolek";
 	private final String PIN_2 = "4321";
+	
+	private final String NAME_3 = "Koziołek";
+	private final String PIN_3 = "1111";
 
 	private final String MODEL_1 = "126p";
 	private final String MAKE_1 = "Fiat";
+	private final Boolean SOLD_1 = false;
 
 	private final String MODEL_2 = "Mondeo";
 	private final String MAKE_2 = "Ford";
+	
+	private final String MODEL_3 = "Racer";
+	private final String MAKE_3 = "Maluch";
 
 	@Test
 	public void addClientCheck() {
@@ -53,6 +62,7 @@ public class SellingManagerTest {
 		person.setFirstName(NAME_1);
 		person.setPin(PIN_1);
 		// ... other properties here
+		person.setRegistrationDate(DATE);
 
 		// Pin is Unique
 		sellingManager.addClient(person);
@@ -62,6 +72,7 @@ public class SellingManagerTest {
 		assertEquals(NAME_1, retrievedClient.getFirstName());
 		assertEquals(PIN_1, retrievedClient.getPin());
 		// ... check other properties here
+		assertEquals(DATE, retrievedClient.getRegistrationDate());
 	}
 
 	@Test
@@ -71,6 +82,7 @@ public class SellingManagerTest {
 		car.setMake(MAKE_1);
 		car.setModel(MODEL_1);
 		// ... other properties here
+		car.setSold(false);
 
 		Long carId = sellingManager.addNewCar(car);
 
@@ -78,8 +90,9 @@ public class SellingManagerTest {
 		assertEquals(MAKE_1, retrievedCar.getMake());
 		assertEquals(MODEL_1, retrievedCar.getModel());
 		// ... check other properties here
+		assertEquals(SOLD_1, retrievedCar.getSold());
 		
-		retrievedCar.setMake("SYRENA");
+		//retrievedCar.setMake("SYRENA");
 
 	}
 
@@ -109,9 +122,32 @@ public class SellingManagerTest {
 		assertEquals(MODEL_2, ownedCars.get(0).getModel());
 	}
 
-	// @Test -
+	@Test
 	public void disposeCarCheck() {
 		// Do it yourself
+		
+		Person person = new Person();
+		person.setFirstName(NAME_3);
+		person.setPin(PIN_3);
+		
+		sellingManager.addClient(person);
+		
+		Car car = new Car();
+		car.setMake(MAKE_3);
+		car.setModel(MODEL_3);
+		car.setSold(true);
+		car.setPerson(person);
+		
+		Long carId = sellingManager.addNewCar(car);
+		
+		//sellingManager.addNewCar(car);
+		
+		Person personik = sellingManager.findClientByPin(PIN_3);
+		Car carek = sellingManager.findCarById(carId);
+		
+		sellingManager.disposeCar(personik, carek);
+		
+		assertEquals(0, personik.getCars().size());
 	}
 
 }

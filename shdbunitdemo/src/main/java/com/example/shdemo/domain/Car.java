@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
@@ -17,6 +19,33 @@ public class Car {
 	private String make;
 	private String model;
 	private Boolean sold = false;
+	
+	
+	private Person person;
+
+	
+	public Car(Long id, String make, String model, Boolean sold, Person person) {
+		super();
+		this.id = id;
+		this.make = make;
+		this.model = model;
+		this.sold = sold;
+		this.person = person;
+	}
+
+	public Car() {
+		super();
+	}
+
+	@ManyToOne
+	@JoinColumn(name="o_id")
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

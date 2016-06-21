@@ -81,6 +81,18 @@ public class BikeRESTService {
 		return bikes;
 	}
 	
+	@POST
+    @Path("/sell/{bikeId}/{personId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response sellBike(@PathParam("bikeId") long b_id,
+                               @PathParam("personId") long p_id)
+    {
+        Bike bike = bm.getBike(b_id);
+        Person person = pm.getPerson(p_id);
+        bm.sellBike(bike, person);
+        return Response.status(201).build();
+    }
+	
 	@DELETE
 	@Path("/clear/{bikeId}")
 	public Response clearPerson(@PathParam("bikeId") Long id) {

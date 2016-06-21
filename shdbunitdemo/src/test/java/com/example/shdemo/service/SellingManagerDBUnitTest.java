@@ -27,12 +27,13 @@ import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/beans.xml" })
-@TransactionConfiguration(transactionManager = "txManager", defaultRollback = false)
+@TransactionConfiguration(transactionManager = "txManager", defaultRollback = true)
 @Transactional
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
     DirtiesContextTestExecutionListener.class,
     TransactionalTestExecutionListener.class,
     DbUnitTestExecutionListener.class })
+
 public class SellingManagerDBUnitTest {
 
 	@Autowired
@@ -40,17 +41,100 @@ public class SellingManagerDBUnitTest {
 
 	@Test
 	@DatabaseSetup("/fullData.xml")
-	@ExpectedDatabase(value = "/addPersonData.xml", 
-	assertionMode = DatabaseAssertionMode.NON_STRICT)
-	public void getClientCheck() {
+	public void getClientsCheck() {
         assertEquals(2, sellingManager.getAllClients().size());
-        
-        Person p = new Person();
+	}
+	
+	@Test
+	@DatabaseSetup("/fullData.xml")
+	@ExpectedDatabase(value = "/addPersonData.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+	public void addClientCheck() {
+		
+		Person p = new Person();
         p.setFirstName("Kaziu");
         p.setPin("8754");
         p.setRegistrationDate(new Date());
         
-        sellingManager.addClient(p);
+        sellingManager.addClient(p); 
+	}
+	
+	@Test
+	@DatabaseSetup("/fullData.xml")
+	public void findClientByPinCheck() {
+		Person p0;
+		p0 = sellingManager.findClientByPin("1234");
+		assertEquals("1234", p0.getPin());
+	}
+	
+	@Test
+	@DatabaseSetup("/fullData.xml")
+	@ExpectedDatabase(value = "/addCarData.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+	public void addCarCheck() {
+		
+		Car car = new Car();
+		car.setId(5L);
+		car.setMake("Skoda");
+		car.setModel("Fabia");
+        car.setSold(false);
+        
+        sellingManager.addNewCar(car); 
+        
+	}
+	
+	@Test
+	@DatabaseSetup("/fullData.xml")
+	public void getCarsCheck() {
+		
+        assertEquals(1, sellingManager.getAvailableCars().size());
+	}
+	
+	@Test
+	@DatabaseSetup("/fullData.xml")
+	public void findCarByIdCheck() {
+		Car c0;
+		c0 = sellingManager.findCarById(3L);
+		assertEquals("Fiat", c0.getMake());
+	}
+	
+	@Test
+	@DatabaseSetup("/fullData.xml")
+	@ExpectedDatabase(value = "/sellCarData.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+	public void sellCarCheck () {
+		Person prsn = sellingManager.findClientByPin("1234");
+		Car cr = sellingManager.findCarById(3L);
+		
+		sellingManager.sellCar(prsn.getId(), cr.getId());
+		assertEquals(0, sellingManager.getAvailableCars().size());
+	}
+	
+	@Ignore
+	@Test
+	@DatabaseSetup("/fullData.xml")
+	@ExpectedDatabase(value = "/disposeCarData.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+	public void disposeCarCheck () {
+		
+		Person personik = sellingManager.findClientByPin("4321");
+		Car carek = sellingManager.findCarById(4L);
+		
+		sellingManager.disposeCar(personik, carek);
+		
+		assertEquals(0, personik.getCars().size());
+	}
+	
+	@Ignore
+	@Test
+	@DatabaseSetup("/fullData.xml")
+	@ExpectedDatabase(value = "/deletePersonData.xml")
+	public void deletePersonCheck() {
+		
+//		for (Person person : sellingManager.getAllClients()) {
+//			   if (person.getPin().equalsIgnoreCase("1234"))
+//				   sellingManager.deleteClient(person);
+//			 }
+		
+		Person p1 = sellingManager.findClientByPin("1234");
+		sellingManager.deleteClient(p1);
+		
 	}
 
 	

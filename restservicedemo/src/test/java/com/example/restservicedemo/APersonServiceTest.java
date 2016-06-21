@@ -70,15 +70,15 @@ public class APersonServiceTest {
 		
 	}
 	
-	@Test
-	public void clearPersons() {
-		delete("/person/").then().assertThat().statusCode(200);
-		given().
-	       contentType(MediaType.APPLICATION_JSON).
-	       body(Person.class).
-	    when().get("/person/0").
-	    then().assertThat().body("firstName", equalTo(null));
-	}
+//	@Test
+//	public void clearPersons() {
+//		delete("/person/").then().assertThat().statusCode(200);
+//		given().
+//	       contentType(MediaType.APPLICATION_JSON).
+//	       body(Person.class).
+//	    when().get("/person/0").
+//	    then().assertThat().body("firstName", equalTo(null));
+//	}
 	
 	@Test
 	public void getPersons(){

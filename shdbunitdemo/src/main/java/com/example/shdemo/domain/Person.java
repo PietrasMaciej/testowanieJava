@@ -65,7 +65,7 @@ public class Person {
 	}
 
 	// Be careful here, both with lazy and eager fetch type
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="person")
 	public List<Car> getCars() {
 		return cars;
 	}
